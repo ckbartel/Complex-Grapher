@@ -7,6 +7,9 @@ function eulerApprox(initialX, initialY, finalX, stepSize, dydx, complexArray) {
   }
   return newY;
 }
+function complexDerivative(ogFunction, complexArray, dz) {
+	return divide(add(ogFunction(add(complexArray, dz)), multiply([-1, 0], ogFunction(complexArray))), dz);
+}
 function divide(numeratorArray, denominatorArray) {
   return [(numeratorArray[0] * denominatorArray[0] + numeratorArray[1] * denominatorArray[1]) / (denominatorArray[0] ** 2 + denominatorArray[1] ** 2), (numeratorArray[1] * denominatorArray[0] - numeratorArray[0] * denominatorArray[1]) / (denominatorArray[0] ** 2 + denominatorArray[1] ** 2)];
 }
@@ -193,7 +196,8 @@ let limitMagnitude = true;
 let limitCap = 100;
 
 function eq(complexArray) {
-  return complexTanh(multiply(complexTanh(complexArray),complexTan(complexArray)));
+  //return complexLambertW(complexArray, 20);
+  return complexDerivative((x) => {return complexTanh(complexTan(x));}, complexArray, [0.01, 0]);
 }
 /*
 Favorite Functions:
@@ -219,9 +223,10 @@ complexRectMod(complexPower(complexSin(complexArray), [2, 0]), complexSin(comple
 complexRectMod([complexArray[1], complexArray[0]], complexArray);
 complexRadialMod(complexArray, getMagnitude(complexLog(complexArray)));
 complexRadialMod(divide(multiply(add(complexArray, [-1, 0]), complexPower(add(complexArray, [-2, -1]), [2, 0])), add(complexPower(complexArray, [2, 0]), [2, 2])), 3);
+complexDerivative((x) => {return complexLambertW(x, 20);}, complexArray, [0.01, 0]);
 */
 let precision = 0.01;
-let luminosity = 50;
+let luminosity = 1;
 let leftBound = -3 * Math.PI;
 let rightBound = 3 * Math.PI;
 let lowerBound = -3 * Math.PI;
